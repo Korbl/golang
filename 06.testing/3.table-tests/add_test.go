@@ -12,7 +12,26 @@ func TestAdd(t *testing.T) {
 		Name   string
 		X, Y   int
 		Output int
-	}{}
+	}{
+		{
+			Name:   "two positive numbers",
+			X:      3,
+			Y:      4,
+			Output: 7,
+		},
+		{
+			Name:   "two negative numbers",
+			X:      -3,
+			Y:      -4,
+			Output: -7,
+		},
+		{
+			Name:   "two mixed numbers",
+			X:      3,
+			Y:      -4,
+			Output: -1,
+		},
+	}
 
 	for _, test := range tests {
 		t.Run(test.Name, func(t *testing.T) {

@@ -1,12 +1,12 @@
 package main
 
 import (
-	"slices"
-	"strings"
+	"sort"
 )
 
 func Sort(input []string) []string {
-	return slices.SortFunc(names, func(a, b string) int { return strings.Compare(strings.ToLower(a), strings.ToLower(b)) })
+	sort.Strings(input)
+	return input
 }
 
 func main() {
@@ -16,4 +16,6 @@ func main() {
 	// Bonus: try the same exercise with the "slices" package
 
 	// run the test to verify your answer (go test)
+	sortedSlice := Sort([]string{"ab", "aa", "aaa"})
+	println(sortedSlice)
 }

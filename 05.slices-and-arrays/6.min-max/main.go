@@ -1,9 +1,21 @@
 package main
 
-func MinMax(input []int) (int int) {
+func MinMax(input []int) (int, int int) {
 	if len(input) == 0 {
 		return 0, 0
 	}
+	min := input[0]
+	max := input[len(input)-1]
+	for x := range input {
+		if min > x {
+			min = x
+		}
+		if max < x {
+			max =x
+		}
+
+	}
+	return min max
 }
 
 func main() {

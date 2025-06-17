@@ -6,6 +6,7 @@ import "fmt"
 func modifySlice(s []int) {
 	if len(s) > 0 {
 		// Your code here: change the first element to 999
+		s[0] = 999
 	}
 }
 
@@ -13,6 +14,7 @@ func modifySlice(s []int) {
 // the slice header (length/capacity) of the original slice variable.
 func growSlice(s *[]int) {
 	// Your code here: append the number 100 to the slice
+	*s = append(*s, 100)
 }
 
 func main() {

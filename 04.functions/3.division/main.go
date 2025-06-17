@@ -4,10 +4,10 @@ import (
 	"fmt"
 )
 
-func divide(x, y int) int {
-	if y == 0 {
-		return 0
-	}
+func divide(x, y float64) float64 {
+	// if y == 0 {
+	// 	return 0
+	// }
 	return x / y
 }
 
@@ -17,5 +17,5 @@ func main() {
 	// Run the tests to verify if your solution is correct.
 	// Note: The test assumes that you'll handle division by zero.
 	// In this case return math.NaN().
-	fmt.Println(divide(42, 6))
+	fmt.Println(divide(1, 0))
 }

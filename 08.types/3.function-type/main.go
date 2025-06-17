@@ -4,6 +4,18 @@ import "fmt"
 
 type Calc func(x, y int) int
 
+func sum(x, y int) int {
+	return x + y
+}
+
+func subtract(x, y int) int {
+	return x - y
+}
+
+func executeCalc(c Calc, x int, y int) int {
+	return c(x, y)
+}
+
 func main() {
 	// given the custom type definition Calc
 	// declare two variables with the Calc type

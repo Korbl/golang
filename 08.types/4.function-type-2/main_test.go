@@ -17,6 +17,16 @@ func TestGetCalculationFunction(t *testing.T) {
 			Input:  CalcTypeSum,
 			Output: 42,
 		},
+		{
+			Name:   "Calc type subtract",
+			Input:  CalcTypeSubtract,
+			Output: 0,
+		},
+		{
+			Name:   "Calc type subtract",
+			Input:  CalcTypeMultiplication,
+			Output: 441,
+		},
 	}
 
 	for _, test := range tests {

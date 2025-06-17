@@ -1,5 +1,11 @@
 package main
 
+func MinMax(input []int) (int int) {
+	if len(input) == 0 {
+		return 0, 0
+	}
+}
+
 func main() {
 	// Define a function MinMax, which takes a slice of integers returns
 	// the min and max values.

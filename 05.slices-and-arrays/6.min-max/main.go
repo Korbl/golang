@@ -1,6 +1,6 @@
 package main
 
-func MinMax(input []int) (int, int int) {
+func MinMax(input []int) (int, int) {
 	if len(input) == 0 {
 		return 0, 0
 	}
@@ -11,11 +11,11 @@ func MinMax(input []int) (int, int int) {
 			min = x
 		}
 		if max < x {
-			max =x
+			max = x
 		}
 
 	}
-	return min max
+	return min, max
 }
 
 func main() {

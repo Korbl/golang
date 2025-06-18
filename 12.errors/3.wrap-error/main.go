@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -8,8 +9,10 @@ var ErrNot42 = fmt.Errorf("it's always 42")
 
 func main() {
 	err := ValidateNumber(44)
-	_ = err
-	// Create a for loop that unwraps the error until there's no underlying error anymore.
+	for err != nil {
+		fmt.Println(err)
+		err = errors.Unwrap(err)
+	}
 }
 
 func ValidateNumber(x int) error {

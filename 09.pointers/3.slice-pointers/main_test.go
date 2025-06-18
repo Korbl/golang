@@ -4,9 +4,10 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
-func TestIncrSlice(t *testing.T) {
+func TestGrowSlice(t *testing.T) {
 	tests := []struct {
 		Name   string
 		Input  *[]int
@@ -24,8 +25,9 @@ func TestIncrSlice(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.Name, func(t *testing.T) {
 			growSlice(test.Input)
-			for i, e := range *test.Input {
-				assert.Equal(t, test.Result[i], e)
+			require.Equal(t, len(test.Result), len(*test.Input), "length of slice should match")
+			for i, e := range test.Result {
+				assert.Equal(t, (*test.Input)[i], e)
 			}
 		})
 	}

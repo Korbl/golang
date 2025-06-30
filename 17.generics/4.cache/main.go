@@ -11,11 +11,19 @@ type Cache[T comparable, U any] interface {
 }
 
 func main() {
-	cache := NewIntCache()
+	cache := NewCache[int, string]{}
 	cache.Set(42, "hello cache")
 	fmt.Println(cache.Get(42))
 }
 
-func NewIntCache() Cache[int, string] {
-	return nil
+type NewCache[T, U comparable] struct {
+	cache map[T]U
+}
+
+func (n *NewCache[T, U]) Set(k T, v U) {
+	n.cache[k] = v
+}
+
+func (n *NewCache[T, U]) Get(k T) U {
+	return n.cache[k]
 }

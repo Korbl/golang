@@ -14,8 +14,8 @@ import (
 // can be found in the testify readme: https://github.com/stretchr/testify#mock-package
 func TestCreateInfo(t *testing.T) {
 	dataStore := NewMockDataStore(t)
-
 	// Define the mock behaviour
+	dataStore.Store(&Info{42, 42, 42}).Return(nil)
 
 	infoHandler := NewInfoHandler(dataStore)
 	result, err := infoHandler.CreateNewInfo(42, 42)

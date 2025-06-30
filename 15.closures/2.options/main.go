@@ -17,6 +17,13 @@ func defaultOptions() *options {
 	}
 }
 
+func newDefaultOptions() *options {
+	return &options{
+		requestTimout: time.Second * 10,
+		sslEnforced:   false,
+	}
+}
+
 type httpClient struct {
 	options *options
 }
@@ -24,14 +31,13 @@ type httpClient struct {
 type OptFunc func(*options)
 
 func NewHTTPClient(opts ...OptFunc) httpClient {
-	defaultOpts := defaultOptions()
+	defaultOpts := newDefaultOptions()
 	for _, f := range opts {
 		f(defaultOpts)
 	}
 	return httpClient{
 		options: defaultOpts,
 	}
-
 }
 
 func main() {

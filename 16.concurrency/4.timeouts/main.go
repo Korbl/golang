@@ -27,8 +27,14 @@ func timeIsMoney() (int, error) {
 		time.Sleep(time.Duration(r.Intn(5000) * int(time.Millisecond)))
 		ch <- 42
 	}()
+	select {
+	case x := <-ch:
+		return x, nil
+	case <-time.After(3 * time.Second):
+		return 0, fmt.Errorf("Timeout!")
+	}
 	// Hint: Use a select statement to listen to multiple channels
 	// Hint: Use the time.After channel to timeout after a given duration
 
-	return 0, nil
+	// return 0, nil
 }

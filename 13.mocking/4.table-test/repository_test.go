@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -15,25 +16,40 @@ func TestCreateInfo(t *testing.T) {
 	}{
 		{
 			Name: "Successfully create info",
+			SetupMockBehaviour: func(dataStore *MockDataStore) {
+				dataStore.EXPECT().Store(&Info{X: 42, Y: 42}).Return(nil)
+			},
+			ExpectErr: false,
+			ExpectedOutput: &Info{
+				X: 42,
+				Y: 42,
+			},
 		},
 		{
 			Name: "Creating the info failed",
+			SetupMockBehaviour: func(dataStore *MockDataStore) {
+				dataStore.EXPECT().Store(&Info{X: 42, Y: 42}).Return(errors.New("something broke start to panic!!!"))
+			},
+			ExpectErr:      true,
+			ExpectedOutput: nil,
 		},
 	}
-	// Refactor the current test to a table test
-	// and fill in the test cases above.
-	// Hint: if you forgot how table test work and look like,
-	// have a look at 6.testing/3.table-tests
-	_ = tests
-	dataStore := NewMockDataStore(t)
 
-	dataStore.On("Store", &Info{X: 42, Y: 42}).Return(nil)
-	infoHandler := NewInfoHandler(dataStore)
-	result, err := infoHandler.CreateNewInfo(42, 42)
-	assert.NoError(t, err)
-	assert.Equal(t, &Info{
-		ID: 1,
-		X:  42,
-		Y:  42,
-	}, result)
+	for _, test := range tests {
+		t.Run(test.Name, func(t *testing.T) {
+			dataStore := NewMockDataStore(t)
+
+			test.SetupMockBehaviour(dataStore)
+
+			infoHandler := NewInfoHandler(dataStore)
+			result, err := infoHandler.CreateNewInfo(42, 42)
+			if test.ExpectErr {
+				assert.Error(t, err)
+				assert.Nil(t, result)
+			} else {
+				assert.Equal(t, test.ExpectedOutput, result)
+				assert.NoError(t, err)
+			}
+		})
+	}
 }

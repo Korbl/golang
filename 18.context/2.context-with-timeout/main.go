@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"math/rand"
 	"time"
 )
@@ -27,5 +28,13 @@ func flakyWork(ctx context.Context, resChan chan (int)) {
 	defer close(resChan)
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	time.Sleep(time.Duration(r.Intn(10) * int(time.Second)))
-	resChan <- 42
+	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
+	defer cancel()
+	select {
+	case <-ctx.Done():
+		log.Println("[flakyWork] ctx Done is received inside flakyWork")
+		close(resChan)
+	default:
+		resChan <- 42
+	}
 }

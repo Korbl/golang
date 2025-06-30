@@ -4,7 +4,14 @@ import "fmt"
 
 // implement the fibonacci using a closure.
 func fib() func() int {
-	return nil
+	firstValue := 0
+	secondValue := 1
+	return func() int {
+		newValue := firstValue + secondValue
+		firstValue = secondValue
+		secondValue = newValue
+		return newValue
+	}
 }
 
 func main() {

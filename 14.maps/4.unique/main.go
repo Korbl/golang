@@ -13,5 +13,9 @@ func main() {
 // Use a map to get the result.
 // Run the tests to verify your result.
 func UniqueElements(list []string) int {
-	return -1
+	uniqueCount := map[string]int{}
+	for _, v := range list {
+		uniqueCount[v] = 1
+	}
+	return len(uniqueCount)
 }

@@ -9,18 +9,31 @@ type Stack[T any] interface {
 }
 
 func main() {
-	intStack := NewIntStack()
+	intStack := &NewStack[int]{}
 	intStack.Push(42)
 	fmt.Println(intStack.Pop())
 
-	stringStack := NewStringStack()
+	stringStack := &NewStack[string]{}
 	stringStack.Push("42")
 	fmt.Println(stringStack.Pop())
-
 }
 
-func NewIntStack() Stack[int] {
-	return nil
+type NewStack[T any] struct {
+	items []T
+}
+
+func (n *NewStack[T]) Push(v T) {
+	n.items = append(n.items, v)
+}
+
+func (n *NewStack[T]) Pop() T {
+	if len(n.items) == 0 {
+		var zero T
+		return zero
+	}
+	item := n.items[len(n.items)-1]
+	n.items = n.items[:len(n.items)-1]
+	return item
 }
 
 func NewStringStack() Stack[string] {

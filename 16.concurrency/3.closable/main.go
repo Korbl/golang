@@ -10,7 +10,7 @@ import (
 
 type Closable interface {
 	// Close release all resources used by this object, including goroutines.
-	Close() error
+	Close(ch chan<- bool) error
 }
 
 type myProcessor struct {
@@ -27,9 +27,10 @@ func (m *myProcessor) Process() {
 	}()
 }
 
-func (m *myProcessor) Close() error {
+func (m *myProcessor) Close(ch chan<- bool) error {
 	// Close should only return when it's certain that the for loop
 	// in the Process function has stopped.
+	m.stopProcessing = true
 	return nil
 }
 
@@ -39,6 +40,7 @@ func main() {
 	closables := []Closable{myProcessor}
 
 	sigs := make(chan os.Signal, 1)
+	ch := make(chan bool)
 
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 
@@ -53,7 +55,7 @@ func main() {
 	sig := <-sigs
 	fmt.Println("Received:", sig)
 	for _, closable := range closables {
-		err := closable.Close()
+		err := closable.Close(ch)
 		if err != nil {
 			fmt.Println("unable to gracefully exit: ", err)
 		}

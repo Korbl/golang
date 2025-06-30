@@ -15,7 +15,16 @@ type RateLimiter interface {
 }
 
 func NewRateLimiter() RateLimiter {
-	return nil
+	return &Limter{timesCalled: map[uuid.UUID]int{}}
+}
+
+type Limter struct {
+	timesCalled map[uuid.UUID]int
+}
+
+func (r *Limter) ShouldLimit(id uuid.UUID) bool {
+	r.timesCalled[id] += 1
+	return r.timesCalled[id] > 5
 }
 
 func main() {

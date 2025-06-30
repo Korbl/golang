@@ -1,6 +1,7 @@
+// Package mypkg goes here.
 package mypkg
 
-// this function returns a string.
+// HelloWorld function.
 func HelloWorld() string {
 	return "hello world"
 }

@@ -65,6 +65,8 @@ func authorizationMiddleware(next http.Handler) http.Handler {
 		// Add the user ID to the request context
 		// Note: Just setting a value in a context, does not add it to the parent context.
 		// The *http.Request struct has a WithContext method that returns a copy of the request
-		next.ServeHTTP(w, r)
+		ctx := context.WithValue(r.Context(), "uuid", userID)
+
+		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

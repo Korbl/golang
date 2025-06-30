@@ -1,12 +1,18 @@
+// Linting requirement
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+)
 
-// Run make lint and see if you can fix the lint errors.
 func main() {
-	hello_func()
+	helloFunc()
 }
 
-func hello_func() {
-	fmt.Println("hi")
+func helloFunc() {
+	_, err := fmt.Println("hi")
+	if err != nil {
+		log.Default()
+	}
 }

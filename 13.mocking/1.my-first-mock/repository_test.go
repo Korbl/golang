@@ -15,7 +15,7 @@ import (
 func TestCreateInfo(t *testing.T) {
 	dataStore := NewMockDataStore(t)
 	// Define the mock behaviour
-	dataStore.Store(&Info{42, 42, 42}).Return(nil)
+	dataStore.Store(&Info{42, 42, 42})
 
 	infoHandler := NewInfoHandler(dataStore)
 	result, err := infoHandler.CreateNewInfo(42, 42)
